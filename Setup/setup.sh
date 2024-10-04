@@ -24,6 +24,14 @@ else
   echo "'test' directory does not exist."
 fi
 
+# Check for multiple Main.java files
+main_count=$(find . -name "Main.java" | wc -l)
+
+if [ "$main_count" -gt 1 ]; then
+  echo "Error: Found $main_count 'Main.java' files. Only one is allowed."
+  exit -1
+fi
+
 
 # Find all .class files and remove them
 find . -name "*.class" -type f -exec rm -f {} \;
@@ -41,6 +49,7 @@ done
 if [ $? -eq 0 ]; then
   echo "Compilation successful."
 else
-  echo "Compilation failed."
-  exit -1
+  echo "Compilation failed.  Check to make sure your project compiles"
+  echo "in your space. If it runs in your space make sure there are no "
+  echo "spaces in any of the folder names.
 fi
